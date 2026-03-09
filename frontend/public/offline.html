@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <title>You're offline · Comic Reader</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #080810;
+      color: #e2e0ff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100dvh;
+      text-align: center;
+      padding: 24px;
+      gap: 20px;
+    }
+    .icon { font-size: 4rem; }
+    h1 { font-size: 1.6rem; font-weight: 700; color: #a78bfa; }
+    p { color: #8b87c4; font-size: 0.95rem; max-width: 320px; line-height: 1.6; }
+    button {
+      margin-top: 8px;
+      padding: 12px 28px;
+      border-radius: 12px;
+      border: 1px solid #7c3aed;
+      background: transparent;
+      color: #a78bfa;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    button:hover { background: rgba(124, 58, 237, 0.15); }
+  </style>
+</head>
+<body>
+  <div class="icon">📖</div>
+  <h1>You're offline</h1>
+  <p>No internet connection detected. Check your network and try again — cached pages will still load normally.</p>
+  <button onclick="location.reload()">Try again</button>
+</body>
+</html>
