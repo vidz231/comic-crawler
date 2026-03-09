@@ -1,0 +1,83 @@
+/* ── Floating Download Indicator ─────────────────────────────────────────────── */
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes dlSpin {
+  to { transform: rotate(360deg); }
+}
+
+.download-indicator {
+  position: fixed;
+  bottom: calc(var(--navbar-h) + 16px + env(safe-area-inset-bottom, 0px));
+  right: 16px;
+  z-index: 900;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: var(--radius-full);
+
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--color-text);
+  border: 1px solid var(--color-accent-18);
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  animation: slideInUp 0.3s ease forwards;
+  box-shadow: var(--shadow-glow);
+}
+
+.download-indicator:hover {
+  transform: scale(1.04);
+  box-shadow: var(--shadow-glow), 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.download-indicator:active {
+  transform: scale(0.98);
+}
+
+.download-indicator__icon {
+  display: flex;
+  align-items: center;
+  color: var(--color-accent-light);
+}
+
+.download-indicator__spin {
+  animation: dlSpin 1s linear infinite;
+}
+
+.download-indicator__label {
+  white-space: nowrap;
+}
+
+.download-indicator__bar {
+  width: 40px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--color-surface-3);
+  overflow: hidden;
+}
+
+.download-indicator__fill {
+  display: block;
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-cyan));
+  transition: width 0.3s ease;
+}
+
+/* On mobile: sit above the tab bar properly */
+body.has-tabbar .download-indicator {
+  bottom: calc(var(--navbar-h) + 16px + env(safe-area-inset-bottom, 0px));
+}

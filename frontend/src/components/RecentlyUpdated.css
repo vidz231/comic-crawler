@@ -1,0 +1,33 @@
+/* ── Recently Updated Section ──────────────────────────────────────────────── */
+.recently-updated {
+  margin-bottom: 28px;
+}
+.recently-updated__scroll {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 8px;
+}
+.recently-updated__scroll > * {
+  scroll-snap-align: start;
+  flex: 0 0 160px;
+  min-width: 160px;
+}
+@media (max-width: 560px) {
+  .recently-updated__scroll > * {
+    flex: 0 0 140px;
+    min-width: 140px;
+  }
+}
+.recently-updated__scroll::-webkit-scrollbar {
+  height: 4px;
+}
+.recently-updated__scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.recently-updated__scroll::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 99px;
+}

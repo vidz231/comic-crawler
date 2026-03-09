@@ -1,0 +1,158 @@
+/* ── Desktop: top sticky bar ──────────────────────────────────────────────── */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  height: calc(var(--navbar-h) + env(safe-area-inset-top, 0px));
+  padding-top: env(safe-area-inset-top, 0px);
+  border-bottom: 1px solid rgba(124, 58, 237, 0.1);
+}
+
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--navbar-h);
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-accent-light);
+  transition: color var(--transition-fast);
+}
+.navbar-brand:hover { color: var(--color-white); }
+.navbar-brand svg { color: var(--color-accent); }
+
+.navbar-links {
+  display: flex;
+  gap: 4px;
+}
+
+.navbar-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: var(--radius-md);
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  transition: all var(--transition-fast);
+  /* Reset button defaults */
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+.navbar-link:hover {
+  color: var(--color-text);
+  background: var(--color-surface-2);
+}
+.navbar-link.active {
+  color: var(--color-accent-light);
+  background: var(--color-accent-15);
+}
+
+/* Activity badge dot for downloads tab */
+.navbar-link {
+  position: relative;
+}
+.navbar-badge {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-cyan);
+  box-shadow: 0 0 6px var(--color-cyan-glow);
+  animation: badgePulse 1.5s ease-in-out infinite;
+}
+@keyframes badgePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.8); }
+}
+
+.navbar-link-label {
+  display: inline;
+}
+
+/* ── Mobile: bottom tab bar ──────────────────────────────────────────────── */
+@media (max-width: 560px) {
+  .navbar {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: auto;
+    padding-top: 0;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    border-bottom: none;
+    border-top: 1px solid rgba(124, 58, 237, 0.1);
+    z-index: 50;
+    background: var(--color-bg) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .navbar-inner {
+    height: 56px;
+    justify-content: center;
+    padding: 0;
+  }
+
+  /* Hide brand on mobile */
+  .navbar-brand {
+    display: none;
+  }
+
+  .navbar-links {
+    display: flex;
+    width: 100%;
+    gap: 0;
+  }
+
+  .navbar-link {
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
+    padding: 6px 0;
+    border-radius: 0;
+    font-size: 0.65rem;
+    font-weight: 500;
+    min-height: 56px;
+    color: var(--color-text-faint);
+  }
+  .navbar-link:hover {
+    background: transparent;
+  }
+  .navbar-link.active {
+    background: transparent;
+    color: var(--color-accent);
+  }
+  .navbar-link svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .navbar-link-label {
+    display: block;
+    font-size: 0.62rem;
+    letter-spacing: 0.02em;
+  }
+}
+
+/* ── Bump body bottom-padding on mobile so content isn't hidden behind tab bar */
+@media (max-width: 560px) {
+  body.has-tabbar {
+    padding-bottom: calc(56px + env(safe-area-inset-bottom, 0px));
+  }
+}

@@ -1,0 +1,174 @@
+/* ── Detail Skeleton ──────────────────────────────────────────────────────── */
+
+/* Banner placeholder — matches .detail-cover-banner */
+.detail-sk__banner {
+  width: 100%;
+  height: 280px;
+  margin-bottom: -60px;
+  border-radius: 0;
+}
+@media (max-width: 560px) {
+  .detail-sk__banner { height: 220px; margin-bottom: -40px; }
+}
+
+/* Breadcrumb placeholder */
+.detail-sk__breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 2;
+}
+.detail-sk__breadcrumb-item {
+  height: 12px;
+  width: 60px;
+  border-radius: var(--radius-sm);
+}
+
+/* Back button — matches .detail-back pill shape */
+.detail-sk__back {
+  height: 34px;
+  width: 80px;
+  border-radius: 99px;
+  margin-bottom: 24px;
+}
+
+/* Header — matches .detail-header */
+.detail-sk__header {
+  display: flex;
+  gap: 32px;
+  margin-bottom: 32px;
+  position: relative;
+  z-index: 2;
+}
+@media (max-width: 640px) {
+  .detail-sk__header { flex-direction: column; }
+}
+
+/* Cover — matches .detail-cover-wrap */
+.detail-sk__cover {
+  flex-shrink: 0;
+  width: 200px;
+  aspect-ratio: 2/3;
+  border-radius: var(--radius-md);
+}
+@media (max-width: 640px) {
+  .detail-sk__cover { width: 150px; }
+}
+
+/* Meta column — matches .detail-meta */
+.detail-sk__meta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Meta-top row — matches .detail-meta-top */
+.detail-sk__meta-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.detail-sk__badge {
+  height: 24px;
+  width: 80px;
+  border-radius: 99px;
+}
+
+.detail-sk__fav-btn {
+  height: 28px;
+  width: 90px;
+  border-radius: 99px;
+}
+
+/* Title — matches .detail-title */
+.detail-sk__title {
+  height: 32px;
+  width: 80%;
+  border-radius: var(--radius-sm);
+}
+
+/* Meta rows — matches .detail-meta-rows */
+.detail-sk__meta-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.detail-sk__meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.detail-sk__meta-icon {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.detail-sk__meta-text {
+  height: 14px;
+  border-radius: var(--radius-sm);
+}
+
+/* Tags */
+.detail-sk__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.detail-sk__tag {
+  height: 24px;
+  border-radius: 99px;
+}
+
+/* Synopsis toggle placeholder */
+.detail-sk__synopsis {
+  height: 16px;
+  width: 100px;
+  border-radius: var(--radius-sm);
+  margin-top: 4px;
+}
+
+/* Quick-read buttons — matches .detail-quick-read */
+.detail-sk__quick-read {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+.detail-sk__quick-btn {
+  flex: 1;
+  height: 46px;
+  border-radius: var(--radius-md);
+}
+
+/* Chapter section — matches .chapter-section */
+.detail-sk__chapter-section {
+  border-top: 1px solid var(--color-border);
+  padding-top: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.detail-sk__chapter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.detail-sk__chapter-heading {
+  height: 20px;
+  width: 160px;
+  border-radius: var(--radius-sm);
+}
+.detail-sk__sort-btn {
+  height: 30px;
+  width: 110px;
+  border-radius: 99px;
+}
+.detail-sk__chapter-row {
+  height: 48px;
+  border-radius: var(--radius-sm);
+}

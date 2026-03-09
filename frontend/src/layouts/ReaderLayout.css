@@ -1,0 +1,15 @@
+/**
+ * ReaderLayout.css
+ *
+ * Styles for the outer reader layout wrapper.
+ * All `position: fixed` elements (progress bar, FABs, settings panel)
+ * live in this layout so they are never trapped inside an animated,
+ * filtered, or transformed ancestor.
+ */
+
+/* Plain content wrapper — NO transform, filter, or animation */
+.reader-layout-content {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}

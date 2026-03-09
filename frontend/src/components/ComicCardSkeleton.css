@@ -1,0 +1,45 @@
+/* ── Comic Card Skeleton ──────────────────────────────────────────────────── */
+
+.comic-card-sk {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  border: 1px solid rgba(124, 58, 237, 0.12);
+  overflow: hidden;
+}
+
+.comic-card-sk__cover {
+  aspect-ratio: 2/3;
+  width: 100%;
+  border-radius: 0;
+}
+
+.comic-card-sk__body {
+  padding: 10px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Title — matches .comic-card__title (2 lines, ~0.88rem, 600wt) */
+.comic-card-sk__title {
+  height: 14px;
+  width: 85%;
+  border-radius: var(--radius-sm);
+}
+
+/* Source — matches .comic-card__source (small uppercase text, 0.68rem) */
+.comic-card-sk__source {
+  height: 10px;
+  width: 40%;
+  border-radius: var(--radius-sm);
+}
+
+/* Rating — matches .comic-card__rating (star icon + number) */
+.comic-card-sk__rating {
+  height: 11px;
+  width: 42px;
+  border-radius: var(--radius-sm);
+  margin-top: 2px;
+}

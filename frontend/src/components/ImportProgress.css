@@ -1,0 +1,279 @@
+/* ── Import Progress Modal ──────────────────────────────────────────────────── */
+
+.ip-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: ipFadeIn 0.3s ease;
+}
+
+.ip-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: 28px 24px;
+  position: relative;
+}
+
+/* ── Circular progress ─────────────────────────────────────────────────────── */
+
+.ip-ring-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.ip-ring {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.ip-ring svg {
+  transform: rotate(-90deg);
+}
+
+.ip-ring-bg {
+  fill: none;
+  stroke: var(--color-surface-3);
+  stroke-width: 6;
+}
+
+.ip-ring-fill {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 6;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.5s ease;
+  filter: drop-shadow(0 0 6px var(--color-accent-glow));
+}
+
+.ip-ring-pct {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--color-white);
+}
+
+/* ── Title / label ─────────────────────────────────────────────────────────── */
+
+.ip-title {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-white);
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.ip-label {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* ── Step list ─────────────────────────────────────────────────────────────── */
+
+.ip-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.ip-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: var(--radius-md);
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.ip-step--done {
+  color: var(--color-success-text);
+  background: rgba(16, 185, 129, 0.08);
+}
+.ip-step--active {
+  color: var(--color-accent-light);
+  background: var(--color-accent-12);
+}
+.ip-step--pending {
+  color: var(--color-text-faint);
+}
+
+.ip-step-icon {
+  flex-shrink: 0;
+  width: 20px;
+  text-align: center;
+}
+
+@keyframes ipSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.ip-spinner {
+  display: inline-block;
+  animation: ipSpin 1s linear infinite;
+}
+
+/* ── File info ─────────────────────────────────────────────────────────────── */
+
+.ip-file-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-2);
+  border: 1px solid rgba(124, 58, 237, 0.08);
+  margin-bottom: 16px;
+}
+
+.ip-file-name {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-text);
+  word-break: break-all;
+}
+
+.ip-file-size {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+}
+
+/* ── Conflict card ─────────────────────────────────────────────────────────── */
+
+.ip-conflict-card {
+  padding: 14px;
+  border-radius: var(--radius-md);
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  margin-bottom: 16px;
+}
+
+.ip-conflict-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-warning-text);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ip-conflict-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(245, 158, 11, 0.1);
+}
+.ip-conflict-item:last-child {
+  border-bottom: none;
+}
+
+.ip-conflict-name {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.ip-conflict-detail {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+}
+
+.ip-conflict-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.ip-conflict-btn {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-2);
+  color: var(--color-text-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.ip-conflict-btn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent-light);
+}
+.ip-conflict-btn--primary {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-white);
+}
+.ip-conflict-btn--primary:hover {
+  background: var(--color-accent-light);
+}
+
+/* ── Footer ────────────────────────────────────────────────────────────────── */
+
+.ip-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.ip-warning {
+  font-size: 0.72rem;
+  color: var(--color-warning-text);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ip-cancel {
+  padding: 6px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  background: transparent;
+  color: var(--color-error-text);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.ip-cancel:hover {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
+/* ── Animations ────────────────────────────────────────────────────────────── */
+
+@keyframes ipFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ip-overlay { animation: none; }
+  .ip-spinner { animation: none; }
+  .ip-ring-fill { transition: none; }
+}

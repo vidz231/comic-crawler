@@ -1,0 +1,54 @@
+.error-boundary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: 24px;
+}
+
+.error-boundary__card {
+  text-align: center;
+  padding: 48px 32px;
+  border-radius: var(--radius-lg);
+  max-width: 440px;
+  width: 100%;
+}
+
+.error-boundary__icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.error-boundary__title {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  color: var(--color-text);
+  margin-bottom: 8px;
+}
+
+.error-boundary__message {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 24px;
+  word-break: break-word;
+}
+
+.error-boundary__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 28px;
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--color-accent);
+  color: var(--color-white);
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background var(--transition-fast), box-shadow var(--transition-fast);
+}
+.error-boundary__btn:hover {
+  background: var(--color-accent-light);
+  box-shadow: var(--shadow-glow);
+}
