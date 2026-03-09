@@ -1,0 +1,5 @@
+node_modules
+dist
+.agents
+.git
+*.md

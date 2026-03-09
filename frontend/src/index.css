@@ -1,0 +1,364 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+
+/* ── Design Tokens ─────────────────────────────────────────────────────────── */
+:root {
+  /* ─ Primitive colors ─ */
+  --color-bg:           #0a0a14;
+  --color-surface:      #10101c;
+  --color-surface-2:    #16162a;
+  --color-surface-3:    #1e1e38;
+  --color-border:       rgba(124, 58, 237, 0.18);
+  --color-accent:       #7c3aed;
+  --color-accent-light: #a78bfa;
+  --color-accent-glow:  rgba(124, 58, 237, 0.35);
+  --color-text:         #e2e0ff;
+  --color-text-muted:   #8b87c4;
+  --color-text-faint:   #4a476b;
+  --color-white:        #fff;
+
+  /* ─ Cyan accent ─ */
+  --color-cyan:         #06b6d4;
+  --color-cyan-light:   #22d3ee;
+  --color-cyan-text:    #67e8f9;
+  --color-cyan-glow:    rgba(6, 182, 212, 0.35);
+  --color-cyan-12:      rgba(6, 182, 212, 0.12);
+  --color-cyan-18:      rgba(6, 182, 212, 0.18);
+  --color-cyan-30:      rgba(6, 182, 212, 0.30);
+
+  /* ─ Semantic status colors ─ */
+  --color-success:      #10b981;
+  --color-success-text: #34d399;
+  --color-warning:      #f59e0b;
+  --color-warning-text: #fbbf24;
+  --color-error:        #ef4444;
+  --color-error-text:   #f87171;
+  --color-error-light:  #fca5a5;
+  --color-rating:       #fbbf24;
+  --color-trending:     #f97316;
+  --color-trending-text:#fdba74;
+
+  /* ─ Accent alpha helpers — avoids repeated rgba(124,58,237,…) ─ */
+  --color-accent-12:    rgba(124, 58, 237, 0.12);
+  --color-accent-15:    rgba(124, 58, 237, 0.15);
+  --color-accent-18:    rgba(124, 58, 237, 0.18);
+  --color-accent-30:    rgba(124, 58, 237, 0.30);
+  --color-accent-55:    rgba(124, 58, 237, 0.55);
+  --color-accent-82:    rgba(124, 58, 237, 0.82);
+
+  /* ─ Overlay helpers ─ */
+  --color-overlay:      rgba(0, 0, 0, 0.65);
+  --color-overlay-light:rgba(0, 0, 0, 0.30);
+  --color-overlay-heavy:rgba(0, 0, 0, 0.50);
+
+  /* ─ Gradient helpers ─ */
+  --gradient-hero:      linear-gradient(135deg, rgba(124,58,237,0.25) 0%, rgba(6,182,212,0.10) 50%, transparent 100%);
+  --gradient-surface:   linear-gradient(135deg, rgba(16,16,28,0.85) 0%, rgba(30,30,56,0.65) 100%);
+
+  /* ─ Typography ─ */
+  --font-heading: 'Outfit', sans-serif;
+  --font-body:    'Inter', sans-serif;
+
+  /* ─ Shape ─ */
+  --radius-sm:   6px;
+  --radius-md:   12px;
+  --radius-lg:   20px;
+  --radius-xl:   28px;
+  --radius-full: 9999px;
+
+  /* ─ Elevation ─ */
+  --shadow-glow: 0 0 24px var(--color-accent-glow);
+  --shadow-card: 0 4px 32px rgba(0, 0, 0, 0.45);
+  --shadow-cyan-glow: 0 0 20px var(--color-cyan-glow);
+
+  /* ─ Motion ─ */
+  --transition-fast: 150ms ease;
+  --transition-mid:  250ms ease;
+
+  /* ─ Layout ─ */
+  --navbar-h: 60px;
+}
+
+/* ── Light theme ───────────────────────────────────────────────────────────── */
+[data-theme="light"] {
+  --color-bg:           #f5f3ff;
+  --color-surface:      #ede9fe;
+  --color-surface-2:    #ddd6fe;
+  --color-surface-3:    #c4b5fd;
+  --color-border:       rgba(124, 58, 237, 0.22);
+  --color-accent:       #7c3aed;
+  --color-accent-light: #6d28d9;
+  --color-accent-glow:  rgba(124, 58, 237, 0.25);
+  --color-text:         #1e1b4b;
+  --color-text-muted:   #4c4585;
+  --color-text-faint:   #7c75aa;
+  --color-white:        #1e1b4b;
+
+  --color-accent-12:    rgba(124, 58, 237, 0.10);
+  --color-accent-15:    rgba(124, 58, 237, 0.12);
+  --color-accent-18:    rgba(124, 58, 237, 0.16);
+  --color-accent-30:    rgba(124, 58, 237, 0.25);
+  --color-accent-55:    rgba(124, 58, 237, 0.45);
+  --color-accent-82:    rgba(124, 58, 237, 0.72);
+
+  --color-overlay:      rgba(255, 255, 255, 0.65);
+  --color-overlay-light:rgba(255, 255, 255, 0.30);
+  --color-overlay-heavy:rgba(255, 255, 255, 0.50);
+
+  --gradient-hero:      linear-gradient(135deg, rgba(124,58,237,0.12) 0%, rgba(6,182,212,0.06) 50%, transparent 100%);
+  --gradient-surface:   linear-gradient(135deg, rgba(237,233,254,0.92) 0%, rgba(221,214,254,0.72) 100%);
+
+  --shadow-glow: 0 0 24px rgba(124, 58, 237, 0.15);
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .glass {
+  background: rgba(245, 243, 255, 0.82);
+  border-color: rgba(124, 58, 237, 0.12);
+}
+[data-theme="light"] .glass-card {
+  background: linear-gradient(135deg, rgba(237,233,254,0.92) 0%, rgba(221,214,254,0.72) 100%);
+  border-color: rgba(124, 58, 237, 0.10);
+}
+
+/* ── OLED Black theme ──────────────────────────────────────────────────────── */
+[data-theme="oled"] {
+  --color-bg:           #000000;
+  --color-surface:      #050508;
+  --color-surface-2:    #0a0a12;
+  --color-surface-3:    #111120;
+  --color-border:       rgba(124, 58, 237, 0.14);
+  --color-accent:       #7c3aed;
+  --color-accent-light: #a78bfa;
+  --color-accent-glow:  rgba(124, 58, 237, 0.30);
+  --color-text:         #d4d0f0;
+  --color-text-muted:   #6b67a0;
+  --color-text-faint:   #3a3660;
+  --color-white:        #fff;
+
+  --gradient-hero:      linear-gradient(135deg, rgba(124,58,237,0.18) 0%, rgba(6,182,212,0.06) 50%, transparent 100%);
+  --gradient-surface:   linear-gradient(135deg, rgba(5,5,8,0.92) 0%, rgba(17,17,32,0.65) 100%);
+
+  --shadow-glow: 0 0 24px rgba(124, 58, 237, 0.25);
+  --shadow-card: 0 4px 32px rgba(0, 0, 0, 0.75);
+}
+
+[data-theme="oled"] .glass {
+  background: rgba(5, 5, 8, 0.85);
+  border-color: rgba(124, 58, 237, 0.10);
+}
+[data-theme="oled"] .glass-card {
+  background: linear-gradient(135deg, rgba(5,5,8,0.92) 0%, rgba(17,17,32,0.65) 100%);
+  border-color: rgba(124, 58, 237, 0.08);
+}
+
+/* ── Reset ─────────────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Global gesture locks (disabled on the comic reader) ───────────────────── */
+body {
+  -webkit-touch-callout: none;  /* iOS: prevent hold-to-save / share sheet */
+  -webkit-user-select: none;    /* prevent text selection on mobile          */
+  user-select: none;
+  touch-action: manipulation;   /* disable double-tap zoom + pinch           */
+}
+/* Re-enable normal input selection */
+input, textarea, [contenteditable] {
+  -webkit-user-select: text;
+  user-select: text;
+}
+/* Prevent context-menu / image-save on images globally */
+img {
+  -webkit-touch-callout: none;
+  pointer-events: none;
+}
+/* ── Reader page: re-enable gestures ──────────────────────────────────────── */
+.reader-page {
+  -webkit-touch-callout: default;
+  -webkit-user-select: auto;
+  user-select: auto;
+  touch-action: auto;
+}
+.reader-page img {
+  -webkit-touch-callout: default;
+  pointer-events: auto;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Prevent off-screen fixed panels from causing horizontal scrollbar */
+  overflow-x: hidden; /* Safari fallback */
+  overflow-x: clip;   /* Modern browsers: blocks scroll-chaining */
+  /* Kill horizontal rubber-band / bounce on iOS PWA */
+  overscroll-behavior-x: none;
+}
+
+/* View Transitions API removed — Chrome-only and caused Safari rendering issues */
+@keyframes fade-out-vt {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+@keyframes fade-in-vt {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Reader mode: hide global navbar to reclaim screen space ────────────────── */
+/* Use height + overflow so sticky navbar doesn't leave stranded whitespace */
+body.reader-mode .navbar {
+  height: 0 !important;
+  min-height: 0 !important;
+  overflow: hidden;
+  border: none;
+  transition: height 0.3s ease;
+  pointer-events: none;
+}
+body.reader-mode {
+  --navbar-h: 0px;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  min-height: 100vh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  /* iOS PWA: avoid content behind the native status bar */
+  padding-top: env(safe-area-inset-top, 0px);
+  /* Prevent horizontal pan gesture on iOS PWA */
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
+}
+
+#root {
+  overflow-x: hidden;
+  /* Restrict touch to vertical only — prevents horizontal swipe jank */
+  touch-action: pan-y;
+}
+
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; font-family: inherit; }
+img { max-width: 100%; display: block; }
+ul { list-style: none; }
+
+/* ── Typography ────────────────────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* ── Glass Surface ─────────────────────────────────────────────────────────── */
+.glass {
+  background: rgba(16, 16, 28, 0.72);
+  backdrop-filter: blur(24px) saturate(1.3);
+  -webkit-backdrop-filter: blur(24px) saturate(1.3);
+  border: 1px solid rgba(124, 58, 237, 0.15);
+}
+
+/* Glass card — reusable for any card component */
+.glass-card {
+  background: var(--gradient-surface);
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  border: 1px solid rgba(124, 58, 237, 0.12);
+  border-radius: var(--radius-md);
+}
+
+/* ── Scrollbar ──────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb {
+  background: var(--color-surface-3);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-accent); }
+
+/* ── Skeleton shimmer ───────────────────────────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-surface-2) 25%,
+    var(--color-surface-3) 50%,
+    var(--color-surface-2) 75%
+  );
+  background-size: 800px 100%;
+  animation: shimmer 1.4s infinite linear;
+  border-radius: var(--radius-sm);
+}
+
+/* ── Fade-in animation ──────────────────────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-in {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+/* ── Utility ────────────────────────────────────────────────────────────────── */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Skip Link ──────────────────────────────────────────────────────────────── */
+.skip-link {
+  position: fixed;
+  top: -50px;
+  left: 8px;
+  background: var(--color-accent);
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.9rem;
+  z-index: 10000;
+  transition: top var(--transition-fast);
+  text-decoration: none;
+}
+.skip-link:focus {
+  top: 0;
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
+
+/* ── prefers-reduced-motion ─────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  /* Shimmer skeleton */
+  .skeleton {
+    animation: none;
+    background: var(--color-surface-3);
+  }
+  /* Fade-in */
+  .fade-in {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  /* Generic fallback */
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
