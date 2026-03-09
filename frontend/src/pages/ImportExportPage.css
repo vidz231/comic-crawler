@@ -1,0 +1,546 @@
+/* ── Import & Export Page ───────────────────────────────────────────────────── */
+
+.ie-page {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 24px 16px 120px;
+}
+
+/* ── Header ────────────────────────────────────────────────────────────────── */
+
+.ie-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.ie-back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  transition: all var(--transition-fast);
+}
+.ie-back:hover {
+  background: var(--color-accent-15);
+  color: var(--color-accent-light);
+}
+
+.ie-title {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-white);
+}
+
+/* ── Section ───────────────────────────────────────────────────────────────── */
+
+.ie-section {
+  margin-bottom: 20px;
+}
+
+.ie-section-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.ie-section-icon {
+  color: var(--color-accent);
+}
+
+.ie-section-title {
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-accent-light);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ── Cards ─────────────────────────────────────────────────────────────────── */
+
+.ie-card {
+  padding: 16px;
+  border-radius: var(--radius-lg);
+  background: var(--gradient-surface);
+  border: 1px solid var(--color-border);
+  margin-bottom: 10px;
+}
+
+.ie-card-title {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-white);
+  margin-bottom: 4px;
+}
+
+.ie-card-desc {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.ie-card-formats {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.ie-format-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  background: var(--color-accent-12);
+  color: var(--color-accent-light);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ── File Picker ───────────────────────────────────────────────────────────── */
+
+.ie-file-drop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 24px;
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-mid);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+.ie-file-drop:hover,
+.ie-file-drop.dragover {
+  border-color: var(--color-accent);
+  background: var(--color-accent-12);
+  color: var(--color-accent-light);
+}
+
+.ie-file-drop-icon {
+  color: var(--color-accent);
+  opacity: 0.6;
+}
+
+.ie-file-drop-text {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.ie-file-drop-hint {
+  font-size: 0.72rem;
+  color: var(--color-text-faint);
+}
+
+/* ── URL Input ─────────────────────────────────────────────────────────────── */
+
+.ie-url-row {
+  display: flex;
+  gap: 8px;
+}
+
+.ie-url-input {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 0.85rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+.ie-url-input::placeholder {
+  color: var(--color-text-faint);
+}
+.ie-url-input:focus {
+  border-color: var(--color-accent);
+}
+
+.ie-url-paste {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-2);
+  color: var(--color-text-muted);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+.ie-url-paste:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent-light);
+}
+
+/* ── Source Selector ───────────────────────────────────────────────────────── */
+
+.ie-source-list {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ie-source-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-2);
+  color: var(--color-text-muted);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.ie-source-btn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent-light);
+  background: var(--color-accent-12);
+}
+.ie-source-btn .ie-source-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+}
+.ie-source-dot--mal { background: #2e51a2; }
+.ie-source-dot--anilist { background: #02a9ff; }
+.ie-source-dot--tachiyomi { background: #f44336; }
+
+/* ── Export Toggles ────────────────────────────────────────────────────────── */
+
+.ie-toggle-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 14px;
+}
+
+.ie-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+}
+
+.ie-toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
+  color: var(--color-text);
+}
+
+.ie-toggle-icon {
+  font-size: 1rem;
+}
+
+/* Toggle switch — reuses Settings pattern */
+.ie-toggle {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  border: none;
+  cursor: pointer;
+  background: var(--color-surface-3);
+  transition: background var(--transition-mid);
+  flex-shrink: 0;
+  padding: 0;
+}
+.ie-toggle.on {
+  background: var(--color-accent);
+}
+.ie-toggle-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: var(--radius-full);
+  background: var(--color-white);
+  transition: transform var(--transition-mid);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+.ie-toggle.on .ie-toggle-thumb {
+  transform: translateX(20px);
+}
+
+/* ── Export Buttons ────────────────────────────────────────────────────────── */
+
+.ie-export-btns {
+  display: flex;
+  gap: 8px;
+}
+
+.ie-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  font-size: 0.88rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: none;
+}
+
+.ie-btn--primary {
+  background: var(--color-accent);
+  color: var(--color-white);
+  box-shadow: 0 4px 16px var(--color-accent-glow);
+}
+.ie-btn--primary:hover {
+  background: var(--color-accent-light);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px var(--color-accent-glow);
+}
+
+.ie-btn--secondary {
+  background: var(--color-surface-2);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+.ie-btn--secondary:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent-light);
+}
+
+/* ── Scheduled Backup ──────────────────────────────────────────────────────── */
+
+.ie-schedule-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 0;
+  margin-bottom: 10px;
+}
+
+.ie-schedule-label {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.ie-freq-select {
+  padding: 7px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 0.82rem;
+  font-family: inherit;
+  outline: none;
+  cursor: pointer;
+}
+.ie-freq-select:focus {
+  border-color: var(--color-accent);
+}
+
+.ie-next-backup {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: var(--color-text-faint);
+  padding-top: 4px;
+}
+
+/* ── Backup History ────────────────────────────────────────────────────────── */
+
+.ie-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ie-history-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  border: 1px solid rgba(124, 58, 237, 0.08);
+}
+
+.ie-history-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ie-history-date {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.ie-history-meta {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+}
+
+.ie-history-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.ie-history-btn {
+  padding: 5px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-2);
+  color: var(--color-text-muted);
+  font-size: 0.72rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.ie-history-btn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent-light);
+}
+
+.ie-history-empty {
+  font-size: 0.82rem;
+  color: var(--color-text-faint);
+  text-align: center;
+  padding: 16px 0;
+}
+
+/* ── Danger Zone ───────────────────────────────────────────────────────────── */
+
+.ie-danger-card {
+  padding: 16px;
+  border-radius: var(--radius-lg);
+  background: rgba(239, 68, 68, 0.06);
+  border: 1px solid rgba(239, 68, 68, 0.18);
+  margin-bottom: 10px;
+}
+
+.ie-danger-title {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-error-text);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ie-danger-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ie-danger-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid rgba(239, 68, 68, 0.15);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.ie-danger-btn:hover {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.35);
+  color: var(--color-error-text);
+}
+
+/* ── Toast ─────────────────────────────────────────────────────────────────── */
+
+.ie-toast {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 500;
+  z-index: 100;
+  animation: ieToastIn 0.3s ease forwards;
+  box-shadow: var(--shadow-card);
+}
+.ie-toast--ok {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--color-success-text);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+.ie-toast--err {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--color-error-text);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+@keyframes ieToastIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(8px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* ── Desktop layout ────────────────────────────────────────────────────────── */
+
+@media (min-width: 768px) {
+  .ie-page {
+    max-width: 800px;
+    padding: 32px 24px 120px;
+  }
+
+  .ie-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .ie-grid > * {
+    margin-bottom: 0;
+  }
+
+  .ie-full-width {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ── Reduced motion ────────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .ie-toast {
+    animation: none;
+    opacity: 1;
+  }
+}

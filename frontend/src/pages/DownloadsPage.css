@@ -1,0 +1,460 @@
+/* ── Downloads Page ────────────────────────────────────────────────────────── */
+
+.downloads-page {
+  padding-top: 24px;
+  padding-bottom: 40px;
+  min-height: 60vh;
+}
+
+/* ── Header ─────────────────────────────────────────────────────────────────── */
+.downloads-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.downloads-header__left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.downloads-header__icon {
+  color: var(--color-accent);
+}
+
+.downloads-header__title {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--color-white);
+}
+
+.downloads-clear-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: var(--radius-full);
+  background: rgba(239, 68, 68, 0.12);
+  color: var(--color-error-text);
+  border: 1px solid rgba(239, 68, 68, 0.18);
+  font-size: 0.82rem;
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+.downloads-clear-btn:hover {
+  background: rgba(239, 68, 68, 0.22);
+}
+
+.downloads-confirm-clear {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+}
+.confirm-clear-yes {
+  padding: 5px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--color-error);
+  color: #fff;
+  border: none;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.confirm-clear-no {
+  padding: 5px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-3);
+  color: var(--color-text);
+  border: none;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+/* ── Section titles ──────────────────────────────────────────────────────────── */
+.downloads-section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 14px;
+}
+
+.downloads-section-badge {
+  margin-left: auto;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  background: var(--color-accent-12);
+  color: var(--color-accent-light);
+  font-size: 0.72rem;
+  font-weight: 600;
+  font-family: var(--font-body);
+}
+
+/* ── Spinner ─────────────────────────────────────────────────────────────────── */
+@keyframes dlSpin {
+  to { transform: rotate(360deg); }
+}
+.dl-spin {
+  animation: dlSpin 1s linear infinite;
+}
+
+/* ── Active downloads section ────────────────────────────────────────────────── */
+.downloads-active-section {
+  margin-bottom: 32px;
+}
+
+/* Queue banner */
+.dl-queue-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+
+.dl-queue-banner__info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.dl-queue-banner__icon {
+  color: var(--color-cyan);
+  flex-shrink: 0;
+}
+
+.dl-queue-banner__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.dl-queue-banner__title {
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dl-queue-banner__sub {
+  font-size: 0.76rem;
+  color: var(--color-text-muted);
+}
+
+.dl-queue-banner__bar {
+  width: 80px;
+  height: 5px;
+  border-radius: 3px;
+  background: var(--color-surface-3);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.dl-queue-banner__fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--color-cyan), var(--color-cyan-light));
+  transition: width 0.3s ease;
+}
+
+.dl-queue-banner__cancel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(239, 68, 68, 0.15);
+  border: none;
+  color: var(--color-error-text);
+  flex-shrink: 0;
+  transition: background var(--transition-fast);
+}
+.dl-queue-banner__cancel:hover {
+  background: rgba(239, 68, 68, 0.3);
+}
+
+/* Active download cards */
+.dl-active-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dl-active-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+}
+
+.dl-active-card__info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-accent-light);
+  flex-shrink: 0;
+}
+
+.dl-active-card__chapter {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--color-text);
+}
+
+.dl-active-card__progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.dl-active-card__bar {
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--color-surface-3);
+  overflow: hidden;
+}
+
+.dl-active-card__fill {
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-cyan));
+  transition: width 0.3s ease;
+}
+
+.dl-active-card__count {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── Downloaded comics section ───────────────────────────────────────────────── */
+.downloads-completed-section {
+  margin-bottom: 32px;
+}
+
+.dl-series-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dl-series-card {
+  overflow: hidden;
+}
+
+.dl-series-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 16px;
+  background: none;
+  border: none;
+  color: var(--color-text);
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+.dl-series-header:hover {
+  background: var(--color-surface-2);
+}
+
+.dl-series-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.dl-series-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dl-series-title {
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--color-white);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color var(--transition-fast);
+}
+.dl-series-title:hover {
+  color: var(--color-accent-light);
+}
+
+.dl-series-meta {
+  font-size: 0.76rem;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+/* Chapter list inside expanded series */
+.dl-chapter-list {
+  border-top: 1px solid var(--color-border);
+}
+
+.dl-chapter-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 16px 10px 28px;
+  border-bottom: 1px solid rgba(124, 58, 237, 0.06);
+  transition: background var(--transition-fast);
+}
+.dl-chapter-item:last-child {
+  border-bottom: none;
+}
+.dl-chapter-item:hover {
+  background: var(--color-surface-2);
+}
+
+.dl-chapter-link {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+}
+
+.dl-chapter-num {
+  font-weight: 500;
+  font-size: 0.85rem;
+  color: var(--color-text);
+}
+
+.dl-chapter-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+.dl-chapter-date {
+  color: var(--color-text-faint);
+}
+
+.dl-chapter-delete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-sm);
+  background: none;
+  border: none;
+  color: var(--color-text-faint);
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+  margin-left: 6px;
+}
+.dl-chapter-delete:hover {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--color-error-text);
+}
+
+/* ── Empty state ──────────────────────────────────────────────────────────────── */
+.downloads-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 24px;
+  min-height: 40vh;
+}
+
+.downloads-empty__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: var(--color-accent-12);
+  color: var(--color-accent-light);
+  margin-bottom: 20px;
+}
+
+.downloads-empty__title {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-white);
+  margin-bottom: 8px;
+}
+
+.downloads-empty__text {
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+  max-width: 320px;
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.downloads-empty__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 24px;
+  border-radius: var(--radius-full);
+  background: var(--color-accent);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.88rem;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-glow);
+}
+.downloads-empty__cta:hover {
+  background: var(--color-accent-light);
+  transform: translateY(-1px);
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────────── */
+@media (max-width: 560px) {
+  .downloads-header__title {
+    font-size: 1.3rem;
+  }
+
+  .dl-queue-banner {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .dl-queue-banner__bar {
+    width: 100%;
+    order: 3;
+  }
+
+  .dl-series-header {
+    padding: 12px 14px;
+  }
+
+  .dl-chapter-item {
+    padding-left: 20px;
+  }
+
+  .dl-chapter-link {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+}

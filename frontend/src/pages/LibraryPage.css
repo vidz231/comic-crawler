@@ -1,0 +1,357 @@
+/* ── Library Page ──────────────────────────────────────────────────────────── */
+.library-page {
+  min-height: calc(100vh - var(--navbar-h));
+  padding-bottom: 64px;
+  background: var(--color-bg);
+}
+
+/* ── Header ────────────────────────────────────────────────────────────────── */
+.library-header {
+  padding: 28px 20px 0;
+  text-align: center;
+}
+.library-header__title {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-white);
+}
+
+/* ── Tabs ──────────────────────────────────────────────────────────────────── */
+.library-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  padding: 16px 20px 0;
+  border-bottom: 1px solid rgba(124, 58, 237, 0.1);
+}
+.library-tab {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  padding: 10px 16px;
+  position: relative;
+  transition: color var(--transition-fast);
+}
+.library-tab:hover {
+  color: var(--color-text);
+}
+.library-tab.active {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+.library-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 12px;
+  right: 12px;
+  height: 2px;
+  background: var(--color-accent);
+  border-radius: 2px 2px 0 0;
+}
+.library-tab__count {
+  margin-left: 4px;
+  opacity: 0.7;
+}
+
+/* ── Card list ─────────────────────────────────────────────────────────────── */
+.library-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 16px 0;
+}
+
+/* ── Comic card — horizontal row ────────────────────────────────────────── */
+.library-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  border: 1px solid rgba(124, 58, 237, 0.1);
+  position: relative;
+  overflow: hidden;
+  transition: border-color var(--transition-fast), transform var(--transition-fast);
+  text-decoration: none;
+  color: inherit;
+}
+.library-card:hover {
+  border-color: rgba(124, 58, 237, 0.25);
+  transform: translateY(-1px);
+}
+
+/* Cover thumbnail */
+.library-card__cover-wrap {
+  width: 60px;
+  height: 60px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--color-surface-2);
+}
+.library-card__cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.library-card__cover-placeholder {
+  width: 100%;
+  height: 100%;
+  background: var(--color-surface-3);
+}
+
+/* Info column */
+.library-card__info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.library-card__title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-white);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.library-card__source {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+.library-card__meta {
+  font-size: 0.73rem;
+  color: var(--color-text-faint);
+}
+
+/* "New" badge */
+.library-card__badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--color-cyan);
+  color: #000;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: var(--radius-full);
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+}
+
+/* Progress bar at card bottom */
+.library-card__progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2.5px;
+  background: transparent;
+}
+.library-card__progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-light));
+  border-radius: 0 2px 2px 0;
+  transition: width var(--transition-mid);
+}
+
+/* ── Downloaded card extras ─────────────────────────────────────────────── */
+.library-card__delete-btn {
+  background: none;
+  border: none;
+  color: var(--color-text-faint);
+  padding: 6px;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-fast), background var(--transition-fast);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.library-card__delete-btn:hover {
+  color: var(--color-error-text);
+  background: rgba(239, 68, 68, 0.12);
+}
+
+/* ── Empty state ───────────────────────────────────────────────────────────── */
+.library-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 48px 24px;
+  text-align: center;
+}
+.library-empty__icon {
+  color: var(--color-text-faint);
+  opacity: 0.5;
+}
+.library-empty__text {
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+}
+.library-empty__sub {
+  font-size: 0.78rem;
+  color: var(--color-text-faint);
+  max-width: 280px;
+}
+
+/* ── Storage section ───────────────────────────────────────────────────────── */
+.library-storage {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  margin: 20px 16px 0;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  border: 1px solid rgba(124, 58, 237, 0.1);
+}
+.library-storage__label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-white);
+  flex-shrink: 0;
+}
+.library-storage__bar-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.library-storage__bar {
+  width: 100%;
+  height: 4px;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-3);
+  overflow: hidden;
+}
+.library-storage__bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-cyan), var(--color-cyan-light));
+  border-radius: var(--radius-full);
+  transition: width var(--transition-mid);
+}
+.library-storage__usage {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  text-align: right;
+}
+.library-storage__clear-btn {
+  background: none;
+  border: 1px solid var(--color-accent-30);
+  color: var(--color-accent-light);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  font-family: inherit;
+}
+.library-storage__clear-btn:hover {
+  background: var(--color-accent-15);
+  border-color: var(--color-accent);
+  color: var(--color-white);
+}
+
+/* ── Tab content ───────────────────────────────────────────────────────── */
+.library-content {
+}
+
+/* ── Download groups (group-by-comic) ─────────────────────────────────── */
+.dl-group {
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  border: 1px solid rgba(124, 58, 237, 0.1);
+  overflow: hidden;
+}
+.dl-group__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px 4px 0;
+}
+.dl-group__toggle {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  text-align: left;
+  font-family: inherit;
+}
+.dl-group__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.dl-group__title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-white);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dl-group__meta {
+  font-size: 0.73rem;
+  color: var(--color-text-faint);
+}
+.dl-group__chevron {
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+  transition: transform var(--transition-fast);
+}
+.dl-group__chevron--open {
+  transform: rotate(180deg);
+}
+
+/* Chapter rows inside expanded group */
+.dl-group__chapters {
+  border-top: 1px solid rgba(124, 58, 237, 0.08);
+}
+.dl-chapter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 8px 2px 0;
+}
+.dl-chapter__link {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px 8px 20px;
+  text-decoration: none;
+  color: inherit;
+  transition: background var(--transition-fast);
+}
+.dl-chapter__link:hover {
+  background: rgba(124, 58, 237, 0.06);
+}
+.dl-chapter__num {
+  font-size: 0.82rem;
+  color: var(--color-text);
+  font-weight: 500;
+}
+.dl-chapter__pages {
+  font-size: 0.72rem;
+  color: var(--color-text-faint);
+}
+.dl-chapter + .dl-chapter {
+  border-top: 1px solid rgba(124, 58, 237, 0.05);
+}
