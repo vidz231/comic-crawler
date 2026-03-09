@@ -1,0 +1,90 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# Comic Crawler — Production Docker Compose
+#
+# Services
+# ────────
+#   api       : FastAPI backend (port 8000, internal only)
+#   frontend  : Nginx serving the React SPA + proxy to api (port 80, exposed)
+#
+# Usage
+# ─────
+#   1. cp .env.example .env  &&  edit .env
+#   2. docker compose build
+#   3. docker compose up -d
+#   4. Open http://localhost
+# ──────────────────────────────────────────────────────────────────────────────
+
+services:
+
+  # ── Backend API ─────────────────────────────────────────────────────────────
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: comic-crawler-api:latest
+    container_name: comic_api
+
+    # Load crawler configuration from .env file
+    env_file:
+      - .env
+
+    # The API port is NOT exposed to the host — only accessible via the
+    # internal network and through Nginx in the frontend container.
+    expose:
+      - "8000"
+
+    volumes:
+      # Persist crawled output files across container restarts
+      - output_data:/app/output
+
+    restart: unless-stopped
+    networks:
+      - comic_net
+
+    healthcheck:
+      test:
+        - "CMD"
+        - "python"
+        - "-c"
+        - "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"
+      interval: 30s
+      timeout: 10s
+      start_period: 20s
+      retries: 3
+
+  # ── Frontend ─────────────────────────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: comic-crawler-frontend:latest
+    container_name: comic_frontend
+
+    ports:
+      # Expose HTTP on port 80 (or override with FRONTEND_PORT env var)
+      - "${FRONTEND_PORT:-80}:80"
+
+    depends_on:
+      api:
+        condition: service_healthy
+
+    restart: unless-stopped
+    networks:
+      - comic_net
+
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost/"]
+      interval: 30s
+      timeout: 5s
+      start_period: 5s
+      retries: 3
+
+# ── Networks ──────────────────────────────────────────────────────────────────
+networks:
+  comic_net:
+    driver: bridge
+
+# ── Volumes ───────────────────────────────────────────────────────────────────
+volumes:
+  output_data:
+    driver: local
