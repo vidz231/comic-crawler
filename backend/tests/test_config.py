@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
-import os
 from pathlib import Path
 
 import pytest
+from pydantic import ValidationError
 
 from comic_crawler.config import CrawlerConfig
 from comic_crawler.exceptions import ConfigError
@@ -72,15 +72,15 @@ class TestCrawlerConfigValidation:
             CrawlerConfig(log_level="VERBOSE")
 
     def test_concurrency_must_be_positive(self) -> None:
-        with pytest.raises(Exception):
+        with pytest.raises(ValidationError):
             CrawlerConfig(concurrency=0)
 
     def test_concurrency_max_50(self) -> None:
-        with pytest.raises(Exception):
+        with pytest.raises(ValidationError):
             CrawlerConfig(concurrency=100)
 
     def test_download_delay_non_negative(self) -> None:
-        with pytest.raises(Exception):
+        with pytest.raises(ValidationError):
             CrawlerConfig(download_delay=-1.0)
 
 
@@ -93,3 +93,42 @@ class TestCrawlerConfigEnvVars:
         config = CrawlerConfig()
         assert config.concurrency == 20
         assert config.log_level == "WARNING"
+
+    def test_cors_origins_accepts_json_array(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        monkeypatch.setenv(
+            "COMIC_CORS_ORIGINS",
+            '["https://frontend.example.com","https://admin.example.com"]',
+        )
+        config = CrawlerConfig()
+        assert config.cors_origins == [
+            "https://frontend.example.com",
+            "https://admin.example.com",
+        ]
+
+    def test_cors_origins_accepts_single_origin(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        monkeypatch.setenv("COMIC_CORS_ORIGINS", "https://frontend.example.com")
+        config = CrawlerConfig()
+        assert config.cors_origins == ["https://frontend.example.com"]
+
+    def test_cors_origins_accepts_comma_separated_list(
+        self, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        monkeypatch.setenv(
+            "COMIC_CORS_ORIGINS",
+            "https://frontend.example.com, https://admin.example.com",
+        )
+        config = CrawlerConfig()
+        assert config.cors_origins == [
+            "https://frontend.example.com",
+            "https://admin.example.com",
+        ]
+
+    def test_blank_cors_origins_uses_default(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        monkeypatch.setenv("COMIC_CORS_ORIGINS", "   ")
+        config = CrawlerConfig()
+        assert config.cors_origins == ["http://localhost:3000"]
+
+    def test_invalid_json_cors_origins_raises(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        monkeypatch.setenv("COMIC_CORS_ORIGINS", "[")
+        with pytest.raises(ConfigError, match="Invalid cors_origins"):
+            CrawlerConfig()

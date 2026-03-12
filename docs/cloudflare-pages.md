@@ -1,4 +1,4 @@
-# Cloudflare Pages deployment
+# Cloudflare frontend deployment
 
 This repository can be deployed to Cloudflare's free tier only for the `frontend` app.
 
@@ -6,7 +6,7 @@ The current `backend` service is a Python FastAPI crawler that depends on Playwr
 
 ## What works on Cloudflare for free
 
-- `frontend/` on Cloudflare Pages
+- `frontend/` on Cloudflare
 - Custom domain on Pages if you want one
 
 ## What does not fit the free Cloudflare path here
@@ -17,18 +17,20 @@ The current `backend` service is a Python FastAPI crawler that depends on Playwr
 ## Prerequisites
 
 1. A separately hosted backend URL, for example `https://api.example.com`
-2. Backend CORS updated to allow your Pages hostname
+2. Backend CORS updated to allow your Cloudflare hostname
 3. Cloudflare auth configured locally with `npx wrangler login`
 
 ## Backend changes required before frontend deploy
 
-Set `COMIC_CORS_ORIGINS` on the backend to include your Pages site, for example:
+Set `COMIC_CORS_ORIGINS` on the backend to include your frontend site, for example:
 
 ```env
-COMIC_CORS_ORIGINS=["https://comic-crawler-frontend.pages.dev"]
+COMIC_CORS_ORIGINS=["https://comic-crawler.workers.dev"]
 ```
 
-## Direct upload deploy
+## Wrangler deploy
+
+This repo ships `frontend/wrangler.jsonc`, which already enables SPA fallback for static assets. Do not add a `dist/_redirects` rule when deploying with `wrangler deploy`.
 
 ```bash
 cd frontend
@@ -36,25 +38,13 @@ cp .env.example .env
 # Set VITE_API_BASE_URL to your backend origin, for example:
 # VITE_API_BASE_URL=https://api.example.com
 npm install
-npm run build
 npx wrangler login
-npx wrangler pages deploy dist --project-name comic-crawler-frontend
+npm run deploy
 ```
-
-## Git-based Pages deploy
-
-Use these settings in Cloudflare Pages:
-
-- Root directory: `frontend`
-- Build command: `npm ci && npm run build`
-- Build output directory: `dist`
-- Environment variable: `VITE_API_BASE_URL=https://api.example.com`
-
-The included `frontend/public/_redirects` file enables SPA routing on Pages.
 
 ## Recommended production shape
 
-- Cloudflare Pages: React PWA frontend
+- Cloudflare: React PWA frontend
 - Separate host: current FastAPI crawler API
 
 If you want the whole stack on Cloudflare, that becomes a migration project rather than a deploy step.

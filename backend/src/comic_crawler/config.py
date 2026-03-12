@@ -2,13 +2,16 @@
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
-from typing import Literal
+from typing import Annotated, Literal
 
 from pydantic import Field, field_validator
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
 
 from comic_crawler.exceptions import ConfigError
+
+_DEFAULT_CORS_ORIGINS = ["http://localhost:3000"]
 
 
 class CrawlerConfig(BaseSettings):
@@ -56,8 +59,8 @@ class CrawlerConfig(BaseSettings):
     rate_limit: str = Field(
         default="60/minute", description="API rate limit in slowapi format (e.g. '60/minute')"
     )
-    cors_origins: list[str] = Field(
-        default_factory=lambda: ["http://localhost:3000"],
+    cors_origins: Annotated[list[str], NoDecode] = Field(
+        default_factory=lambda: _DEFAULT_CORS_ORIGINS.copy(),
         description="Allowed CORS origins. Set to specific domains in production.",
     )
 
@@ -79,3 +82,36 @@ class CrawlerConfig(BaseSettings):
     @classmethod
     def _coerce_output_dir(cls, v: str | Path) -> Path:
         return Path(v)
+
+    @field_validator("cors_origins", mode="before")
+    @classmethod
+    def _parse_cors_origins(cls, v: object) -> list[str]:
+        if v is None:
+            return _DEFAULT_CORS_ORIGINS.copy()
+
+        if isinstance(v, list):
+            return [str(item).strip() for item in v if str(item).strip()]
+
+        if isinstance(v, str):
+            raw = v.strip()
+            if not raw:
+                return _DEFAULT_CORS_ORIGINS.copy()
+
+            if raw.startswith("["):
+                try:
+                    parsed = json.loads(raw)
+                except json.JSONDecodeError as exc:
+                    raise ConfigError(
+                        "Invalid cors_origins. Use a JSON array or comma-separated origins."
+                    ) from exc
+
+                if not isinstance(parsed, list):
+                    raise ConfigError(
+                        "Invalid cors_origins. Use a JSON array or comma-separated origins."
+                    )
+
+                return [str(item).strip() for item in parsed if str(item).strip()]
+
+            return [origin.strip() for origin in raw.split(",") if origin.strip()]
+
+        raise ConfigError("Invalid cors_origins. Use a JSON array or comma-separated origins.")
