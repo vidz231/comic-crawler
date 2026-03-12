@@ -1,5 +1,5 @@
 previews:
-  generation: none
+  generation: off
 
 services:
   - type: web
