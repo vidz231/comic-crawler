@@ -107,12 +107,7 @@ ENV PLAYWRIGHT_BROWSERS_PATH=/opt/playwright-browsers
 EXPOSE 8000
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 \
-    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"
+    CMD python -c "import os, urllib.request; urllib.request.urlopen(f\"http://localhost:{os.environ.get('PORT', '8000')}/health\")"
 
 # Use --factory so create_app() is called fresh (allows env-based config)
-CMD ["uvicorn", "comic_crawler.api.app:create_app", \
-     "--factory", \
-     "--host", "0.0.0.0", \
-     "--port", "8000", \
-     "--workers", "1", \
-     "--log-level", "info"]
+CMD ["sh", "-c", "exec uvicorn comic_crawler.api.app:create_app --factory --host 0.0.0.0 --port ${PORT:-8000} --workers 1 --log-level info"]

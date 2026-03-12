@@ -56,6 +56,12 @@ npm run dev                        # http://localhost:5173
 
 The Vite dev server proxies `/api/*` to the backend automatically.
 
+## ☁️ Cloudflare Deployment
+
+The `frontend` app can be deployed on Cloudflare Pages' free tier. The current FastAPI + Playwright `backend` is not a practical fit for free Cloudflare Workers/Pages as-is.
+
+See [docs/cloudflare-pages.md](docs/cloudflare-pages.md) for the deployable setup.
+
 ### Using Make
 
 ```bash
