@@ -1,0 +1,35 @@
+previews:
+  generation: off
+
+services:
+  - type: web
+    name: comic-crawler-backend
+    runtime: docker
+    plan: free
+    region: singapore
+    branch: main
+    autoDeploy: true
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: "10000"
+      - key: COMIC_CORS_ORIGINS
+        sync: false
+      - key: COMIC_CONCURRENCY
+        value: "1"
+      - key: COMIC_DOWNLOAD_DELAY
+        value: "3.0"
+      - key: COMIC_MAX_RETRIES
+        value: "3"
+      - key: COMIC_RATE_LIMIT
+        value: "60/minute"
+      - key: COMIC_PROXY_LIST
+        value: "[]"
+      - key: COMIC_LOG_LEVEL
+        value: "INFO"
+    buildFilter:
+      paths:
+        - backend/**
+        - render.yaml

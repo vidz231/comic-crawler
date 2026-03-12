@@ -1,3 +1,5 @@
+import { buildApiUrl, isApiUrl } from '../config/api';
+
 /**
  * Rewrite an external image URL to go through the backend image proxy.
  * Only proxies TruyenQQ CDN domains to bypass hotlink protection.
@@ -18,7 +20,7 @@ export function proxyImageUrl(url: string | null | undefined): string | null {
   if (url.startsWith('data:') || url.includes('/api/v1/image-proxy')) return url;
   // Only proxy allowlisted CDN domains
   if (!PROXY_DOMAINS.some(d => url!.includes(d))) return url;
-  return `/api/v1/image-proxy?url=${encodeURIComponent(url)}`;
+  return buildApiUrl(`/api/v1/image-proxy?url=${encodeURIComponent(url)}`);
 }
 
 /**
@@ -31,10 +33,10 @@ export function isCorsReady(resolvedUrl: string | null | undefined): boolean {
   if (resolvedUrl.startsWith('data:')) return true;
   // Our own proxy / relative paths are same-origin → always CORS-safe
   if (resolvedUrl.startsWith('/')) return true;
+  if (isApiUrl(resolvedUrl)) return true;
   try {
     return new URL(resolvedUrl).origin === window.location.origin;
   } catch {
     return false;
   }
 }
-
