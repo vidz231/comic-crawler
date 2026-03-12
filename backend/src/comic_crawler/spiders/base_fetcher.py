@@ -43,12 +43,19 @@ from __future__ import annotations
 import random
 import time
 from collections.abc import Callable
+from contextlib import suppress
 from typing import Any
 
 from scrapling.fetchers import Fetcher, StealthyFetcher
 
 from comic_crawler.exceptions import BlockedError, FetchError
 from comic_crawler.logging import get_logger
+
+_PERSISTENT_CONTEXT_CRASH_MARKERS = (
+    "BrowserType.launch_persistent_context",
+    "chrome_crashpad_handler",
+    "--database is required",
+)
 
 
 def _retry_with_backoff(
@@ -84,7 +91,7 @@ def _retry_with_backoff(
             return result
         except FetchError:
             raise
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:
             last_exc = exc
             if attempt < max_retries:
                 sleep_s = (2**attempt) + random.uniform(0.5, 2.0)
@@ -285,7 +292,25 @@ class BaseFetcher:
             fetch_kwargs["wait_selector"] = wait_selector
 
         def _do_request() -> Any:
-            return StealthyFetcher.fetch(url, **fetch_kwargs)
+            try:
+                return StealthyFetcher.fetch(url, **fetch_kwargs)
+            except Exception as exc:
+                if self._should_use_ephemeral_browser_fallback(exc):
+                    log.warning(
+                        "persistent_context_launch_failed_fallback",
+                        url=url,
+                        error=str(exc),
+                    )
+                    return self._fetch_with_ephemeral_browser(
+                        url,
+                        network_idle=network_idle,
+                        wait_selector=wait_selector,
+                        block_images=block_images,
+                        disable_resources=True,
+                        timeout_ms=int(fetch_kwargs["timeout"]),
+                        proxy=proxy_kwargs.get("proxy"),
+                    )
+                raise
 
         return _retry_with_backoff(
             _do_request,
@@ -294,3 +319,113 @@ class BaseFetcher:
             url=url,
             label="fetch",
         )
+
+    @staticmethod
+    def _should_use_ephemeral_browser_fallback(exc: Exception) -> bool:
+        """Detect Playwright persistent-context launch crashes in Chromium."""
+        message = str(exc)
+        return all(marker in message for marker in _PERSISTENT_CONTEXT_CRASH_MARKERS)
+
+    def _fetch_with_ephemeral_browser(
+        self,
+        url: str,
+        *,
+        network_idle: bool,
+        wait_selector: str | None,
+        block_images: bool,
+        disable_resources: bool = True,
+        timeout_ms: int,
+        proxy: str | dict[str, str] | None,
+        page_script: str | None = None,
+    ) -> Any:
+        """Fetch with a non-persistent Playwright browser context.
+
+        This avoids Chromium crashes seen with ``launch_persistent_context`` in
+        some container images while keeping the browser-based fetch path
+        available for JS-rendered pages.
+        """
+        from playwright.sync_api import sync_playwright
+        from scrapling.engines.toolbelt.fingerprints import generate_headers
+        from scrapling.parser import Adaptor
+
+        blocked_resource_types: set[str] = set()
+        if disable_resources:
+            blocked_resource_types.update(
+                {
+                    "beacon",
+                    "csp_report",
+                    "font",
+                    "imageset",
+                    "media",
+                    "object",
+                    "stylesheet",
+                    "texttrack",
+                    "websocket",
+                }
+            )
+        if block_images:
+            blocked_resource_types.add("image")
+
+        launch_options: dict[str, Any] = {
+            "args": [
+                "--disable-blink-features=AutomationControlled",
+                "--disable-dev-shm-usage",
+                "--disable-infobars",
+                "--disable-setuid-sandbox",
+                "--hide-scrollbars",
+                "--lang=en-US",
+                "--mute-audio",
+                "--no-sandbox",
+                "--window-position=0,0",
+            ],
+            "channel": "chromium",
+            "headless": True,
+            "ignore_default_args": ["--enable-automation"],
+        }
+        if proxy:
+            launch_options["proxy"] = proxy if isinstance(proxy, dict) else {"server": proxy}
+
+        context_options: dict[str, Any] = {
+            "device_scale_factor": 2,
+            "ignore_https_errors": True,
+            "locale": "en-US",
+            "screen": {"width": 1920, "height": 1080},
+            "user_agent": generate_headers(browser_mode="chrome").get("User-Agent"),
+            "viewport": {"width": 1920, "height": 1080},
+        }
+
+        with sync_playwright() as playwright:
+            browser = playwright.chromium.launch(**launch_options)
+            context = browser.new_context(**context_options)
+            try:
+                page = context.new_page()
+                page.set_default_navigation_timeout(timeout_ms)
+                page.set_default_timeout(timeout_ms)
+
+                if blocked_resource_types:
+                    def _handle_route(route: Any) -> None:
+                        if route.request.resource_type in blocked_resource_types:
+                            route.abort()
+                        else:
+                            route.continue_()
+
+                    page.route("**/*", _handle_route)
+
+                page.goto(url, wait_until="load")
+                page.wait_for_load_state("domcontentloaded")
+
+                if page_script:
+                    page.evaluate(page_script)
+                    page.wait_for_timeout(750)
+
+                if wait_selector:
+                    page.locator(wait_selector).first.wait_for(state="attached")
+
+                if network_idle:
+                    with suppress(Exception):
+                        page.wait_for_load_state("networkidle", timeout=timeout_ms)
+
+                return Adaptor(page.content(), url=page.url, auto_match=False)
+            finally:
+                context.close()
+                browser.close()

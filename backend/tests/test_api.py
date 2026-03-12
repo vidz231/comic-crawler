@@ -14,7 +14,9 @@ import pytest
 from httpx import ASGITransport
 
 from comic_crawler.api.app import create_app
-from comic_crawler.api.dependencies import get_registry
+from comic_crawler.api.dependencies import get_config, get_registry
+from comic_crawler.api.routers import image_proxy as image_proxy_router
+from comic_crawler.config import CrawlerConfig
 from comic_crawler.spiders.registry import SpiderRegistry
 
 # ---------------------------------------------------------------------------
@@ -384,3 +386,46 @@ async def test_search_with_genre(client, mock_spider):
     data = resp.json()
     assert data["sources_queried"] == ["asura"]
     mock_spider.search.assert_called_once_with(name=None, page=1, genre="fantasy")
+
+
+# ---------------------------------------------------------------------------
+# GET /api/v1/image-proxy
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.asyncio
+async def test_image_proxy_allows_khotruyen_and_passes_configured_proxies(
+    client, app, monkeypatch
+):
+    captured: dict[str, object] = {}
+
+    def _fake_fetch_image(url: str, referer: str | None, proxy_list: list[str]):
+        captured["url"] = url
+        captured["referer"] = referer
+        captured["proxy_list"] = proxy_list
+        return b"image-bytes", 200, "image/jpeg"
+
+    app.dependency_overrides[get_config] = lambda: CrawlerConfig(
+        proxy_list=["http://proxy.example:8080"]
+    )
+    monkeypatch.setattr(image_proxy_router, "_fetch_image", _fake_fetch_image)
+
+    resp = await client.get(
+        "/api/v1/image-proxy",
+        params={
+            "url": (
+                "https://khotruyen.ac/wp-content/uploads/2024/01/"
+                "truyen-thuc-tap-o-lang-tien-ca.jpg"
+            )
+        },
+    )
+
+    assert resp.status_code == 200
+    assert resp.content == b"image-bytes"
+    assert resp.headers["content-type"] == "image/jpeg"
+    assert captured["url"] == (
+        "https://khotruyen.ac/wp-content/uploads/2024/01/"
+        "truyen-thuc-tap-o-lang-tien-ca.jpg"
+    )
+    assert captured["referer"] == "https://khotruyen.ac/"
+    assert captured["proxy_list"] == ["http://proxy.example:8080"]

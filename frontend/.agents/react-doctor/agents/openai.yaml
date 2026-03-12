@@ -1,0 +1,4 @@
+interface:
+  display_name: "React Doctor"
+  short_description: "Audit and verify React frontend changes"
+  default_prompt: "Use $react-doctor to audit this React frontend after my changes and fix the highest-risk issues."
