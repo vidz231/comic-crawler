@@ -419,8 +419,7 @@ class BaseFetcher:
                     page.wait_for_timeout(750)
 
                 if wait_selector:
-                    with suppress(Exception):
-                        page.locator(wait_selector).first.wait_for(state="attached")
+                    page.locator(wait_selector).first.wait_for(state="attached")
 
                 if network_idle:
                     with suppress(Exception):

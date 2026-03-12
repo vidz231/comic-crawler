@@ -76,3 +76,40 @@ def test_do_fetch_raises_fetch_error_for_non_fallback_failures() -> None:
             wait_selector=None,
             block_images=False,
         )
+
+
+def test_ephemeral_fallback_raises_when_wait_selector_never_attaches() -> None:
+    """Selector wait failures in ephemeral mode must propagate for retry/error handling."""
+    fetcher = _DummyBrowserFetcher()
+
+    mock_page = MagicMock()
+    mock_page.locator.return_value.first.wait_for.side_effect = TimeoutError("selector timeout")
+
+    mock_context = MagicMock()
+    mock_context.new_page.return_value = mock_page
+
+    mock_browser = MagicMock()
+    mock_browser.new_context.return_value = mock_context
+
+    mock_playwright = MagicMock()
+    mock_playwright.chromium.launch.return_value = mock_browser
+
+    with (
+        patch("playwright.sync_api.sync_playwright") as sync_playwright,
+        patch("scrapling.engines.toolbelt.fingerprints.generate_headers", return_value={"User-Agent": "ua"}),
+    ):
+        sync_playwright.return_value.__enter__.return_value = mock_playwright
+
+        with pytest.raises(TimeoutError, match="selector timeout"):
+            fetcher._fetch_with_ephemeral_browser(
+                "https://example.com",
+                network_idle=False,
+                wait_selector=".required-element",
+                block_images=False,
+                disable_resources=True,
+                timeout_ms=5000,
+                proxy=None,
+            )
+
+    mock_context.close.assert_called_once()
+    mock_browser.close.assert_called_once()
