@@ -13,6 +13,8 @@ const PROXY_DOMAINS = [
   'truyenqqno.com', 'truyenvua.com', 'tintruyen.net', 'hinhhinh.com', 'hinhtruyen.com',
   // MangaKakalot / Manganato CDN
   '2xstorage.com',
+  // WordPress-hosted manga images behind Cloudflare
+  'khotruyen.ac',
 ];
 
 export function proxyImageUrl(url: string | null | undefined): string | null {

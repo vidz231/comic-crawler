@@ -1,15 +1,9 @@
 # React Doctor
 
-Run after making React changes to catch issues early. Use when reviewing code, finishing a feature, or fixing bugs in a React project.
+Run React Doctor after making React changes to catch correctness, hook, performance, and architecture issues early. Use when reviewing code, finishing a feature, fixing a bug, or validating a React/Vite frontend before handoff.
 
-Scans your React codebase for security, performance, correctness, and architecture issues. Outputs a 0-100 score with actionable diagnostics.
+Audit the React frontend from `frontend/` with:
 
-## Usage
+`npx -y react-doctor@latest . --verbose --diff`
 
-```bash
-npx -y react-doctor@latest . --verbose --diff
-```
-
-## Workflow
-
-Run after making changes to catch issues early. Fix errors first, then re-run to verify the score improved.
+Then verify the highest-risk findings with `npm run lint` and `npm run build`.

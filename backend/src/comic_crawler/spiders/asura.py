@@ -381,8 +381,6 @@ class AsuraSpider(BaseFetcher):
         Returns:
             Scrapling Adaptor response after the tab content has re-rendered.
         """
-        from scrapling.fetchers import StealthyFetcher
-
         config = getattr(self, "_config", None)
         max_retries = max(1, config.max_retries) if config else 1
 
@@ -409,15 +407,15 @@ class AsuraSpider(BaseFetcher):
         last_exc: Exception | None = None
         for attempt in range(1, max_retries + 1):
             try:
-                response = StealthyFetcher.fetch(
+                response = self._fetch_with_ephemeral_browser(
                     BASE_URL,
-                    headless=True,
                     network_idle=True,
+                    wait_selector=self._HOMEPAGE_SELECTOR,
                     block_images=False,
                     disable_resources=False,
-                    timeout=60000,
-                    execute_script=script,
-                    **proxy_kwargs,
+                    timeout_ms=60000,
+                    proxy=proxy_kwargs.get("proxy"),
+                    page_script=script,
                 )
                 if response is None:
                     raise FetchError("Homepage tab fetch returned None", url=BASE_URL)
