@@ -146,6 +146,13 @@ async def test_health(client):
     assert "version" in data
 
 
+@pytest.mark.asyncio
+async def test_livez(client):
+    resp = await client.get("/livez")
+    assert resp.status_code == 200
+    assert resp.json() == {"status": "ok"}
+
+
 # ---------------------------------------------------------------------------
 # OpenAPI schema
 # ---------------------------------------------------------------------------

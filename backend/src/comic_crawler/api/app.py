@@ -97,6 +97,15 @@ def create_app() -> FastAPI:
     # ------------------------------------------------------------------ Routes
 
     @app.get(
+        "/livez",
+        tags=["Health"],
+        summary="Container liveness check",
+    )
+    async def livez() -> dict[str, str]:
+        """Fast liveness check for container orchestration."""
+        return {"status": "ok"}
+
+    @app.get(
         "/health",
         response_model=HealthResponse,
         tags=["Health"],
